@@ -18,6 +18,7 @@ with open('config/config.json', 'r') as file:
 mlflow.set_experiment(project_name)
 
 df = Spreadsheet().get_data('../data/raw/train.csv')
+df = df[['Survived', 'Pclass', 'Sex', 'Age']]
 p = Preprocessing()
 df = p.clean_data(df)
 df = p.categ_encoding(df)

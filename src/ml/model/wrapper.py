@@ -52,6 +52,29 @@ class Wrapper(mlflow.pyfunc.PythonModel):
         columns = self.artifacts["columns"]
         return model.predict(df_processed[columns])
 
+    def predict_with_pre(self, model_input):
+        """
+    	Method that returns the result of the prediction on a dataset
+    
+    	Parameters
+    	----------            
+        df : pd.DataFrame
+             Data to be predicted
+             
+    	Returns
+    	-------
+        list
+        """
+        df_processed  = model_input.copy()
+        model = self.artifacts["model"]
+        columns = self.artifacts["columns"]
+        preprocessing = self.artifacts["preprocessing"]
+        df_processed = preprocessing.process(df_processed)
+
+        print("Colunas",df_processed.columns)
+        
+        return model.predict(df_processed[columns])
+
     def predict_proba(self, model_input, binary=False):
         """
     	Method that returns the result of the prediction on a dataset
@@ -73,6 +96,30 @@ class Wrapper(mlflow.pyfunc.PythonModel):
         else:
             return model.predict_proba(df_processed[columns])
             
+    def predict_proba_with_pre(self, model_input, binary=False):
+        """
+    	Method that returns the result of the prediction on a dataset
+    
+    	Parameters
+    	----------            
+        df : pd.DataFrame
+             data to be predicted
+             
+    	Returns
+    	-------
+        list
+        """
+        df_processed  = model_input.copy()
+        model = self.artifacts["model"]
+        columns = self.artifacts["columns"]
+        preprocessing = self.artifacts["preprocessing"]
+        df_processed = preprocessing.process(df_processed)
+
+        if binary:
+            return model.predict_proba(df_processed[columns])[:,1]
+        else:
+            return model.predict_proba(df_processed[columns])
+
     def save_model(self, path):
         """
     	Saves the model object to a specific path
