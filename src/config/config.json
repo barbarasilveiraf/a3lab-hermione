@@ -1,0 +1,7 @@
+{
+"project_name": "hermione-a3lab",
+"env_path": "hermione-a3lab/hermione-a3lab_env",
+"files_path": "../data/raw/",
+"key": "<<<<key>>>>",
+"user": "<<<<user>>>>"
+}
